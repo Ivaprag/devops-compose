@@ -8,56 +8,10 @@ services:
     environment:
       REVERSE_PROXY_DOMAIN_NAME: ${REVERSE_PROXY_DOMAIN_NAME}
 
-  jira:
-    image: cptactionhank/atlassian-jira-software
-    environment:
-      X_PROXY_NAME: jira.${REVERSE_PROXY_DOMAIN_NAME}
-      X_PROXY_PORT: 80
-      X_PROXY_SCHEME: http
-    volumes:
-      - jira-data:/var/atlassian/jira
-      - jira-logs:/opt/atlassian/jira/logs
-
-  confluence:
-    image: cptactionhank/atlassian-confluence
-    environment:
-      X_PROXY_NAME: confluence.${REVERSE_PROXY_DOMAIN_NAME}
-      X_PROXY_PORT: 80
-      X_PROXY_SCHEME: http
-    volumes:
-      - confluence-data:/var/atlassian/confluence
-
-  gitbucket:
-    image: f99aq8ove/gitbucket
-    environment:
-      GITBUCKET_DB_URL: jdbc:postgresql://db/gitbucket
-      GITBUCKET_DB_USER: gitbucket
-      GITBUCKET_DB_PASSWORD: gitbucket
-    volumes:
-      - gitbucket-data:/gitbucket
-
   jenkins:
     image: jenkins
     volumes:
       - jenkins-data:/var/jenkins_home
-
-  artifactory:
-    image: docker.bintray.io/jfrog/artifactory-oss
-    volumes:
-      - artifactory-data:/var/opt/jfrog/artifactory/data
-      - artifactory-conf:/var/opt/jfrog/artifactory/etc
-
-  sonarqube:
-    image: sonarqube
-    environment:
-      - SONARQUBE_JDBC_USERNAME=sonarqube
-      - SONARQUBE_JDBC_PASSWORD=sonarqube
-      - SONARQUBE_JDBC_URL=jdbc:postgresql://db:5432/sonarqube
-    volumes:
-      - sonarqube-conf:/opt/sonarqube/conf
-      - sonarqube-data:/opt/sonarqube/data
-      - sonarqube-extensions:/opt/sonarqube/extensions
-      - sonarqube-plugins:/opt/sonarqube/lib/bundled-plugins
 
   mattermost:
     image: mattermost/mattermost-prod-app:3.9.0
@@ -86,41 +40,9 @@ services:
     volumes:
       - db-data:/var/lib/postgresql/data
 
-  ldap:
-    image: osixia/openldap
-    environment:
-      LDAP_DOMAIN: ${REVERSE_PROXY_DOMAIN_NAME}
-    volumes:
-      - ldap-data:/var/lib/ldap
-      - ldap-config:/etc/ldap/slapd.d
-    ulimits:
-      nofile:
-        soft: 65536
-        hard: 65536
-
 volumes:
-  jira-data:
-    driver: local
-  jira-logs:
-    driver: local
-  confluence-data:
-    driver: local
-  gitbucket-data:
-    driver: local
   jenkins-data:
-    driver: local
-  artifactory-data:
-    driver: local
-  artifactory-conf:
-    driver: local
-  sonarqube-conf:
-    driver: local
-  sonarqube-data:
-    driver: local
-  sonarqube-extensions:
-    driver: local
-  sonarqube-plugins:
-    driver: local
+    driver: local&
   mattermost-data:
     driver: local
   mattermost-config:
@@ -132,8 +54,4 @@ volumes:
   owncloud-apps:
     driver: local
   db-data:
-    driver: local
-  ldap-data:
-    driver: local
-  ldap-config:
     driver: local
