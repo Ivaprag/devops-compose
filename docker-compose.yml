@@ -42,7 +42,7 @@ services:
 
 volumes:
   jenkins-data:
-    driver: local&
+    driver: local
   mattermost-data:
     driver: local
   mattermost-config:
