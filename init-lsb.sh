@@ -1,39 +1,25 @@
-#!/bin/sh -e
-
-### BEGIN INIT INFO
-# Provides:       devops-compose
-# Required-Start: docker
-# Required-Stop:  docker
-# Default-Start:  2 3 4 5
-# Default-Stop:   0 1 6
-### END INIT INFO
-
-PROJECT_DIR=/opt/devops-compose
-OPTS=""
-PATH="/usr/local/bin:$PATH"
-
-cd "$PROJECT_DIR"
-
 case "$1" in
     start)
-        echo "Starting Docker Compose" "$PROJECT_DIR" >&2
-        docker-compose $OPTS build
-        docker-compose $OPTS up -d
+        echo "Starting Docker Compose" >&2
+        echo "Reverse proxy domain name is \"$(hostname -i)\"" >&2
+        echo "REVERSE_PROXY_DOMAIN_NAME=$(hostname -i)" > .env
+        docker-compose build
+        docker-compose up -d
         ;;
 
     stop)
-        echo "Stopping Docker Compose" "$PROJECT_DIR" >&2
-        docker-compose $OPTS stop
+        echo "Stopping Docker Compose" >&2
+        docker-compose stop
         ;;
 
     restart)
-        echo "Restarting Docker Compose" "$PROJECT_DIR" >&2
-        docker-compose $OPTS build
-        docker-compose $OPTS restart
+        echo "Restarting Docker Compose" >&2
+        docker-compose build
+        docker-compose restart
         ;;
 
     status)
-        docker-compose $OPTS ps
+        docker-compose ps
         ;;
 
     *)
