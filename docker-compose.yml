@@ -7,6 +7,8 @@ services:
       - "80:80"
     environment:
       REVERSE_PROXY_DOMAIN_NAME: ${REVERSE_PROXY_DOMAIN_NAME}
+    volumes_from:
+      - gitlab
 
   jenkins:
     image: jenkins
@@ -45,6 +47,36 @@ services:
     volumes:
       - fitnesse-data:/opt/fitnesse/FitNesseRoot 
 
+  redis:
+    image: bitnami/redis:latest
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+
+  gitlab:
+    image: sameersbn/gitlab:9.4.1
+    depends_on:
+      - db
+      - redis
+    links:
+      - db
+      - redis
+    environment:
+      - GITLAB_HTTPS=false
+      - SSL_SELF_SIGNED=false
+      - DB_ADAPTER=postgresql
+      - DB_HOST=db
+      - DB_USER=postgres
+      - DB_PASS=postgres
+      - DB_NAME=gitlab
+      - GITLAB_HOST=gitlab
+      - GITLAB_PORT=80
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - GITLAB_SECRETS_DB_KEY_BASE=long-and-random-alpha-numeric-string
+      - GITLAB_SECRETS_SECRET_KEY_BASE=long-and-random-alpha-numeric-string
+      - GITLAB_SECRETS_OTP_KEY_BASE=long-and-random-alpha-numeric-string
+    volumes:
+      - gitlab-data:/home/git/data:Z
 
 volumes:
   jenkins-data:
@@ -62,4 +94,8 @@ volumes:
   db-data:
     driver: local
   fitnesse-data:
+    driver: local
+  redis-data:
+    driver: local
+  gitlab-data:
     driver: local
