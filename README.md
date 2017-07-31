@@ -8,7 +8,7 @@ A self-deployable, directly usable docker-compose of the following containers:
 * PostgreSQL
 * GitLab
 
-You only need to clone the repo, start docker-compose build && up through the script and here you go, you have all the services from above accessible through `[service].[hostlocalip]'.
+Clone the repo, start through the script and you'll get all the services from above accessible through `[service].[hostlocalip]`.
 
 
 ## Setup
