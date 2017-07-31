@@ -1,4 +1,4 @@
-# Open source development environement with docker-compose
+# Open source development environment with docker-compose
 
 A self-deployable, directly usable docker-compose of the following containers:
 
