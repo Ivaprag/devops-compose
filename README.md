@@ -2,11 +2,15 @@
 
 A self-deployable, directly usable docker-compose of the following containers:
 
+* GitLab
 * Jenkins
 * Mattermost
 * ownCloud
 * PostgreSQL
-* GitLab
+
+Additionnaly to get everything working:
+* Nginx
+* Redis
 
 Clone the repo, start through the script and you'll get all the services from above accessible through `[service].[hostlocalip]`.
 
