@@ -1,8 +1,8 @@
 case "$1" in
     start)
         echo "Starting Docker Compose" >&2
-        echo "Reverse proxy domain name is \"$(hostname -i)\"" >&2
-        echo "REVERSE_PROXY_DOMAIN_NAME=$(hostname -i)" > .env
+        echo "Reverse proxy domain name is \"$(hostname -i | cut -d' ' -f1)\"" >&2
+        echo "REVERSE_PROXY_DOMAIN_NAME=$(hostname -i | cut -d' ' -f1)" > .env
         docker-compose build
         docker-compose up -d
         ;;
