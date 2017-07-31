@@ -1,28 +1,34 @@
 # DevOps Compose
 
-A compose of following Docker containers:
+A self-deployable, directly usable docker-compose of the following containers:
 
 * Jenkins
 * Mattermost
 * ownCloud
 * PostgreSQL
+* GitLab
+
+You only need to clone the repo, start docker-compose build && up through the script and here you go, you have all the services from above accessible through `[service].[hostlocalip]'.
 
 
 ## Setup
 
-Execute the init script with the parameter start to setup your containers.
-
 ```
-# You might need to use 'sudo' before to execute properly
+git clone https://github.com/Ivaprag/devops-compose.git
+cd devops-compose
+# You might put sudo before launching the script, depending on your docker user group.
 ./init.lsb.sh start
 ```
 
-You can also do [ stop | restart | status ]
+Wait until the magic is done and here you go, you didn't even have to touch your DNS services. 
+
+For example: `jenkins.192.168.1.2` to access to your Jenkins.
 
 
 ## Backup and Restore
 
 It may be best to backup and restore volumes under `/var/lib/docker/volumes`.
+
 
 ## Contribution
 
