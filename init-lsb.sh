@@ -4,7 +4,7 @@ case "$1" in
         echo "Reverse proxy domain name is \"$(hostname -i | cut -d' ' -f1)\"" >&2
         echo "REVERSE_PROXY_DOMAIN_NAME=$(hostname -i | cut -d' ' -f1)" > .env
         docker-compose build
-        docker-compose up -d
+        docker-compose up 
         ;;
 
     stop)

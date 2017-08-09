@@ -5,6 +5,11 @@ services:
     build: nginx
     ports:
       - "80:80"
+      - "8081:8081"
+      - "8082:8082"
+      - "8083:8083"
+      - "8084:8084"
+      - "8085:8085"
     environment:
       REVERSE_PROXY_DOMAIN_NAME: ${REVERSE_PROXY_DOMAIN_NAME}
     volumes_from:
@@ -14,11 +19,12 @@ services:
     image: jenkins
     volumes:
       - jenkins-data:/var/jenkins_home
+      - cd-code:/var/jenkins_home/workspace/
 
   mattermost:
     image: mattermost/mattermost-prod-app:3.9.0
     environment:
-      MATTERMOST_ENABLE_SSL: "true"
+      MATTERMOST_ENABLE_SSL: "false"
       DB_HOST: db
       MM_DBNAME: mattermost
       MM_USERNAME: mattermost
@@ -43,9 +49,10 @@ services:
       - db-data:/var/lib/postgresql/data
 
   fitnesse:
-    image: itmagix/fitnesse
+    image: ivaprag/fitnesse
     volumes:
       - fitnesse-data:/opt/fitnesse/FitNesseRoot 
+      - cd-code:/opt/fitnesse/workspace
 
   redis:
     image: bitnami/redis:latest
@@ -98,4 +105,6 @@ volumes:
   redis-data:
     driver: local
   gitlab-data:
+    driver: local
+  cd-code:
     driver: local
