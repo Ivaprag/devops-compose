@@ -10,13 +10,14 @@ services:
       - "8083:8083"
       - "8084:8084"
       - "8085:8085"
+      - "8096:8096"
     environment:
-      REVERSE_PROXY_DOMAIN_NAME: ${REVERSE_PROXY_DOMAIN_NAME}
-    volumes_from:
+        REVERSE_PROXY_DOMAIN_NAME: ${REVERSE_PROXY_DOMAIN_NAME}
+    depends_on:
       - gitlab
 
   jenkins:
-    image: jenkins
+    image: ivaprag/jenkins
     volumes:
       - jenkins-data:/var/jenkins_home
       - cd-code:/var/jenkins_home/workspace/
@@ -29,6 +30,8 @@ services:
       MM_DBNAME: mattermost
       MM_USERNAME: mattermost
       MM_PASSWORD: mattermost
+    depends_on:
+      - db
     volumes:
       - mattermost-data:/mattermost/data
       - mattermost-config:/mattermost/config
