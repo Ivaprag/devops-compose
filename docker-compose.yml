@@ -17,7 +17,7 @@ services:
       - gitlab
 
   jenkins:
-    image: ivaprag/jenkins
+    image: jenkins
     volumes:
       - jenkins-data:/var/jenkins_home
       - cd-code:/var/jenkins_home/workspace/
