@@ -12,7 +12,7 @@ Additionnaly to get everything working:
 * Nginx
 * Redis
 
-Clone the repo, start through the script and you'll get all the services from above accessible through `[service].[hostlocalip]`.
+Clone the repo, start through the script and you'll get all the services from above accessible through `[hostlocalip]`.
 
 
 ## Setup
@@ -26,7 +26,7 @@ cd devops-compose
 
 Wait until the magic is done and here you go, you didn't even have to touch your DNS services. 
 
-For example: `jenkins.192.168.1.2` to access to your Jenkins.
+For example: `192.168.1.2:8081` to access Jenkins.
 
 
 ## Backup and Restore
