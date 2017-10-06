@@ -9,7 +9,6 @@ services:
       - "8082:8082"
       - "8083:8083"
       - "8084:8084"
-      - "8085:8085"
       - "8096:8096"
     environment:
         REVERSE_PROXY_DOMAIN_NAME: ${REVERSE_PROXY_DOMAIN_NAME}
@@ -20,7 +19,6 @@ services:
     image: jenkins
     volumes:
       - jenkins-data:/var/jenkins_home
-      - cd-code:/var/jenkins_home/workspace/
 
   mattermost:
     image: mattermost/mattermost-prod-app:3.9.0
@@ -50,12 +48,6 @@ services:
       POSTGRES_PASSWORD: postgres
     volumes:
       - db-data:/var/lib/postgresql/data
-
-  fitnesse:
-    image: ivaprag/fitnesse
-    volumes:
-      - fitnesse-data:/opt/fitnesse/FitNesseRoot 
-      - cd-code:/opt/fitnesse/workspace
 
   redis:
     image: bitnami/redis:latest
@@ -103,11 +95,7 @@ volumes:
     driver: local
   db-data:
     driver: local
-  fitnesse-data:
-    driver: local
   redis-data:
     driver: local
   gitlab-data:
-    driver: local
-  cd-code:
     driver: local
