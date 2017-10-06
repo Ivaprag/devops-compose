@@ -21,13 +21,13 @@ services:
       - jenkins-data:/var/jenkins_home
 
   mattermost:
-    image: mattermost/mattermost-prod-app:3.9.0
+    image: mattermost/mattermost-prod-app:latest
     environment:
       MATTERMOST_ENABLE_SSL: "false"
       DB_HOST: db
       MM_DBNAME: mattermost
       MM_USERNAME: mattermost
-      MM_PASSWORD: mattermost
+      MM_PASSWORD: ${PASS} 
     depends_on:
       - db
     volumes:
@@ -45,7 +45,7 @@ services:
     build: postgres
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+      POSTGRES_PASSWORD: ${PASS}
     volumes:
       - db-data:/var/lib/postgresql/data
 
@@ -68,7 +68,7 @@ services:
       - DB_ADAPTER=postgresql
       - DB_HOST=db
       - DB_USER=postgres
-      - DB_PASS=postgres
+      - DB_PASS=${PASS}
       - DB_NAME=gitlab
       - GITLAB_HOST=gitlab
       - GITLAB_PORT=80

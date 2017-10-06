@@ -9,15 +9,25 @@ function setPassword {
 	export PASS=$PASS
 }
 
+function updateDBConfigFile {
+        sed -i -e "s/#PASS#/'"$PASS"'/g" ./postgres/create-database.sql
+}
+
+function resetDBConfigFile {
+        sed -i -e "s/'"$PASS"'/#PASS#/g" ./postgres/create-database.sql
+}
+
 case "$1" in
     start)
         echo "Starting Docker Compose" >&2
-
 	setProxyDomainName
 	setPassword
+        updateDBConfigFile
 
         docker-compose build
         docker-compose up -d 
+
+        resetDBConfigFile
         ;;
 
     stop)
